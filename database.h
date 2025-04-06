@@ -1,6 +1,9 @@
+// database.h - Репозитории данных
 #pragma once
 #include "domain.h"
 #include <vector>
+#include <iomanip>
+#include <ctime>
 
 class SensorRepository {
     vector<Sensor> sensors;
@@ -24,6 +27,10 @@ public:
             }
         return false;
     }
+    
+    const vector<Sensor>& getAll() const {
+        return sensors;
+    }
 };
 
 class IncidentRepository {
@@ -44,5 +51,9 @@ public:
                 return true;
             }
         return false;
+    }
+    
+    const vector<Incident>& getAll() const {
+        return incidents;
     }
 };

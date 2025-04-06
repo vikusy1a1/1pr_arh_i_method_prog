@@ -1,3 +1,4 @@
+// main.cpp - Пользовательский интерфейс
 #include <iostream>
 #include "logic.h"
 using namespace std;
@@ -8,7 +9,9 @@ void display_menu() {
     cout << "2. Update sensor reading\n";
     cout << "3. Check sensor status\n";
     cout << "4. Report incident\n";
-    cout << "5. Exit\n";
+    cout << "5. View all sensors\n";
+    cout << "6. View all incidents\n";
+    cout << "7. Exit\n";
     cout << "Choose option: ";
 }
 
@@ -29,7 +32,6 @@ Sensor input_sensor() {
 }
 
 int main() {
-    setlocale(LC_ALL, "Russian");
     SensorRepository sensor_repo;
     IncidentRepository incident_repo;
     SafetyService service(sensor_repo, incident_repo);
@@ -60,7 +62,7 @@ int main() {
                         s->current_value = value;
                         sensor_repo.update(*s);
                         cout << "Value updated. Status: " 
-                                  << service.check_sensor(id) << "\n";
+                             << service.check_sensor(id) << "\n";
                     } else {
                         cout << "Sensor not found!\n";
                     }
@@ -89,11 +91,27 @@ int main() {
                     cout << "Incident #" << inc_id << " reported\n";
                     break;
                 }
+                case 5: {
+                    cout << service.getAllSensorsInfo();
+                    break;
+                }
+                case 6: {
+                    cout << service.getAllIncidentsInfo();
+                    break;
+                }
+                case 7: {
+                    cout << "Exiting...\n";
+                    break;
+                }
+                default: {
+                    cout << "Invalid option!\n";
+                    break;
+                }
             }
         } catch (...) {
             cerr << "Error occurred!\n";
         }
-    } while (choice != 5);
+    } while (choice != 7);
     
     return 0;
 }
